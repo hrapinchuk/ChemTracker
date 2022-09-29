@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -22,16 +23,19 @@ public class Main extends Application {
     }
 
     /**
-     * This method shows the Main Screen.
+     * This method shows the MainScreen.
      * @param stage A Stage object representing the primary window of this application
      * @throws Exception If an exception occurs
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/MainScreen.fxml")));
+        URL viewURL = Objects.requireNonNull(getClass().getResource("/view/MainScreen.fxml"));
+        URL styleURL = Objects.requireNonNull(getClass().getResource("/style/Style.css"));
+        Parent root = FXMLLoader.load(viewURL);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(styleURL.toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("Main Screen");
+        stage.setTitle("ChemTracker");
         stage.show();
     }
 }

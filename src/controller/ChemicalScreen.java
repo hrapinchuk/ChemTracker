@@ -7,12 +7,12 @@ import utility.Utility;
 import java.io.IOException;
 
 /**
- * This controller class applies to the MainScreen.
+ * This controller class applies to the ChemicalScreen.
  * @author Heather Rapinchuk
  */
-public class MainScreen {
+public class ChemicalScreen {
     /**
-     * When the ChemTracker button is clicked, this method shows the MainScreen.
+     * When the ChemTracker button is clicked, this method shows the Main Screen.
      * @param mouseEvent The click event
      * @throws IOException If an input/output exception occurs
      */
@@ -21,7 +21,7 @@ public class MainScreen {
     }
 
     /**
-     * When the Chemicals menu button is clicked, this method shows the ChemicalScreen.
+     * When the Chemicals menu button is clicked, this method shows the Chemical Screen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */

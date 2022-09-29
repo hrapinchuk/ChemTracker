@@ -1,0 +1,61 @@
+/* Application styling */
+* {
+    -white: #FFFFFF;
+    -off_white: #F4F4F4;
+    -off_black: #212121;
+    -teal: #4BB4AD;
+    -blue: #4B87B4;
+    -green: #4BB478;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-text-fill: -off_black;
+}
+
+.displayMsg {
+    -fx-font-style: italic;
+}
+
+.greenButton {
+    -fx-background-color: -green;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: -green;
+    -fx-border-width: 3px;
+    -fx-cursor: hand;
+    -fx-text-fill: -white;
+}
+
+.greenButton:hover {
+    -fx-background-color: none;
+    -fx-text-fill: -green;
+}
+
+.header1 {
+    -fx-font-size: 24px;
+}
+
+.menu {
+    -fx-background-color: -white;
+    -fx-padding: 0px;
+}
+
+.menuLogo {
+    -fx-cursor: hand;
+}
+
+.menuButton {
+    -fx-background-color: none;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
+
+.menuButton:hover {
+    -fx-background-color: -off_white;
+    -fx-border-color: -green;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+
+TextField {
+  -fx-background-radius: 0;
+  -fx-padding: 8px;
+}
