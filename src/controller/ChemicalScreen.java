@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class ChemicalScreen {
     /**
-     * When the ChemTracker button is clicked, this method shows the Main Screen.
+     * When the ChemTracker button is clicked, this method shows the MainScreen.
      * @param mouseEvent The click event
      * @throws IOException If an input/output exception occurs
      */
@@ -21,7 +21,7 @@ public class ChemicalScreen {
     }
 
     /**
-     * When the Chemicals menu button is clicked, this method shows the Chemical Screen.
+     * When the Chemicals menu button is clicked, this method shows the ChemicalScreen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
@@ -29,9 +29,30 @@ public class ChemicalScreen {
         Utility.showScreen(actionEvent, "ChemicalScreen.fxml");
     }
 
-    public void showUseScreen(ActionEvent actionEvent) {
+    /**
+     * When the Uses menu button is clicked, this method shows the UseScreen.
+     * @param actionEvent The click event
+     * @throws IOException If an input/output exception occurs
+     */
+    public void showUseScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "UseScreen.fxml");
     }
 
-    public void showReportScreen(ActionEvent actionEvent) {
+    /**
+     * When the Reports menu button is clicked, this method shows the ReportScreen.
+     * @param actionEvent The click event
+     * @throws IOException If an input/output exception occurs
+     */
+    public void showReportScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "ReportScreen.fxml");
+    }
+
+    /**
+     * When the New Chemical button is clicked, this method shows the ChemicalDetailScreen.
+     * @param actionEvent The click event
+     * @throws IOException If an input/output exception occurs
+     */
+    public void showChemicalDetailScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "ChemicalDetailScreen.fxml");
     }
 }

@@ -7,10 +7,10 @@ import utility.Utility;
 import java.io.IOException;
 
 /**
- * This controller class applies to the MainScreen.
+ * This controller class applies to the ReportScreen.
  * @author Heather Rapinchuk
  */
-public class MainScreen {
+public class ReportScreen {
     /**
      * When the ChemTracker button is clicked, this method shows the MainScreen.
      * @param mouseEvent The click event
@@ -46,4 +46,5 @@ public class MainScreen {
     public void showReportScreen(ActionEvent actionEvent) throws IOException {
         Utility.showScreen(actionEvent, "ReportScreen.fxml");
     }
+
 }

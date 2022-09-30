@@ -3,34 +3,55 @@
     -white: #FFFFFF;
     -off_white: #F4F4F4;
     -off_black: #212121;
+    -grey: #8F8F8F;
     -teal: #4BB4AD;
     -blue: #4B87B4;
     -green: #4BB478;
+    -maroon: #B44B52;
     -fx-font-family: "Arial", sans-serif;
     -fx-text-fill: -off_black;
+}
+
+ComboBox {
+  -fx-background-radius: 0;
+  -fx-padding: 3px;
+}
+
+DatePicker {
+  -fx-background-radius: 0;
+  -fx-height: 36px;
 }
 
 .displayMsg {
     -fx-font-style: italic;
 }
 
-.greenButton {
-    -fx-background-color: -green;
+.errorLabel {
+    -fx-font-style: italic;
+    -fx-text-fill: -maroon;
+}
+
+.greyButton {
+    -fx-background-color: -grey;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
-    -fx-border-color: -green;
+    -fx-border-color: -grey;
     -fx-border-width: 3px;
     -fx-cursor: hand;
     -fx-text-fill: -white;
 }
 
-.greenButton:hover {
+.greyButton:hover {
     -fx-background-color: none;
-    -fx-text-fill: -green;
+    -fx-text-fill: -grey;
 }
 
 .header1 {
     -fx-font-size: 24px;
+}
+
+.header2 {
+    -fx-font-size: 20px;
 }
 
 .menu {
@@ -40,6 +61,7 @@
 
 .menuLogo {
     -fx-cursor: hand;
+    -fx-font-weight: bold;
 }
 
 .menuButton {
@@ -55,7 +77,39 @@
     -fx-border-width: 0px 0px 3px 0px;
 }
 
+.tealButton {
+    -fx-background-color: -teal;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: -teal;
+    -fx-border-width: 3px;
+    -fx-cursor: hand;
+    -fx-text-fill: -white;
+}
+
+.tealButton:hover {
+    -fx-background-color: none;
+    -fx-text-fill: -teal;
+}
+
+TextArea:focused, DatePicker:focused  {
+    -fx-background-color: -white;
+    -fx-border-color: -teal;
+    -fx-border-width: 2px;
+}
+
 TextField {
   -fx-background-radius: 0;
   -fx-padding: 8px;
+}
+
+TextField:focused, ComboBox:focused {
+    -fx-background-color: -teal, -white;
+    -fx-background-insets: 0, 2px;
+}
+
+}
+
+.whiteBG {
+    -fx-background-color: -white;
 }
