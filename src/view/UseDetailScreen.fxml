@@ -52,7 +52,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Date*" />
+            <Label text="Date/Time*" />
             <Label text="Chemical Used*" GridPane.columnIndex="2" />
             <Label text="Amount*" GridPane.rowIndex="3" />
             <Label text="Application Method*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -64,7 +64,17 @@
             <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="TOP" />
             <Label styleClass="errorLabel" text="Label" GridPane.rowIndex="8" GridPane.valignment="TOP" />
             <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="8" GridPane.valignment="TOP" />
-            <DatePicker maxWidth="1.7976931348623157E308" prefHeight="32.0" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
+               <children>
+                  <DatePicker prefHeight="32.0" />
+                  <TextField minWidth="-Infinity" prefWidth="100.0" />
+                  <ToggleButton minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="AM">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="timeToggle" />
+                     </toggleGroup></ToggleButton>
+                  <ToggleButton layoutX="210.0" layoutY="15.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="PM" toggleGroup="$timeToggle" />
+               </children>
+            </HBox>
             <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField GridPane.rowIndex="4" />
             <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />

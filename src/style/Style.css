@@ -103,11 +103,13 @@ TextField {
   -fx-padding: 8px;
 }
 
-TextField:focused, ComboBox:focused {
+TextField:focused, ComboBox:focused, ToggleButton:focused, ToggleButton:selected {
     -fx-background-color: -teal, -white;
     -fx-background-insets: 0, 2px;
 }
 
+ToggleButton {
+    -fx-background-radius: 0;
 }
 
 .whiteBG {

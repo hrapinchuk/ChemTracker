@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChemicalDetailScreen">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChemicalDetailScreen">
     <top>
         <HBox prefHeight="50.0" prefWidth="200.0" styleClass="menu" BorderPane.alignment="CENTER">
             <children>
@@ -53,34 +53,39 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Name*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label alignment="TOP_LEFT" styleClass="errorLabel" text="Error message" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Code*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label alignment="TOP_LEFT" styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Manufacturer*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Units Used*" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label text="Registration Number*" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label text="Description" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                  <Label text="Description" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                  <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="19">
                      <children>
                         <Button mnemonicParsing="false" styleClass="tealButton" text="Add Chemical">
                            <HBox.margin>
@@ -89,6 +94,12 @@
                         <Button mnemonicParsing="false" styleClass="greyButton" text="Cancel" />
                      </children>
                   </HBox>
+                  <Label text="Reentry Period" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
+                  <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label text="Units Used*" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
+                  <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="14" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <GridPane styleClass="whiteBG" GridPane.columnIndex="3" GridPane.rowIndex="2">
