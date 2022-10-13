@@ -5,12 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This class represents utilities used by other classes.
@@ -57,5 +60,33 @@ public class Utility {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(primaryStage);
         stage.show();
+    }
+
+    /**
+     * This method displays an alert to the user to confirm whether to perform an action.
+     * @param content A String representing the message to display in the alert
+     * @return A boolean representing whether the user has confirmed an action (true) or not (false)
+     */
+    public static boolean showConfAlert(String content) {
+        // Display a message to confirm that the user wants to perform an action
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(content);
+
+        // Assign user's input to result
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Return result
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    /**
+     * This method displays an informational alert to the user.
+     * @param content A String representing the message to display in the alert
+     */
+    public static void showInfoAlert(String content) {
+        // Display a message to the user
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(content);
+        alert.show();
     }
 }

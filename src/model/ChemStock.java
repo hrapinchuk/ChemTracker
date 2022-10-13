@@ -3,10 +3,10 @@ package model;
 import java.time.LocalDate;
 
 /**
- * This model class provides the ability to create and access Stock objects.
+ * This model class provides the ability to create and access ChemStock objects.
  * @author Heather Rapinchuk
  */
-public class Stock {
+public class ChemStock {
     // Variable declarations
     private int id;
     private int chemID;
@@ -21,7 +21,7 @@ public class Stock {
      * @param amount A double representing the amount of chemical being stocked
      * @param addDate A LocalDate representing the date that the stock was added
      */
-    public Stock(int id, int chemID, double amount, LocalDate addDate) {
+    public ChemStock(int id, int chemID, double amount, LocalDate addDate) {
         this.id = id;
         this.chemID = chemID;
         this.amount = amount;

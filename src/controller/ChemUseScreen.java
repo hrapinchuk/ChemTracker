@@ -7,10 +7,10 @@ import utility.Utility;
 import java.io.IOException;
 
 /**
- * This controller class applies to the UseScreen.
+ * This controller class applies to the ChemUseScreen.
  * @author Heather Rapinchuk
  */
-public class UseScreen {
+public class ChemUseScreen {
     /**
      * When the ChemTracker button is clicked, this method shows the MainScreen.
      * @param mouseEvent The click event
@@ -30,12 +30,12 @@ public class UseScreen {
     }
 
     /**
-     * When the Uses menu button is clicked, this method shows the UseScreen.
+     * When the Uses menu button is clicked, this method shows the ChemUseScreen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
-    public void showUseScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showScreen(actionEvent, "UseScreen.fxml");
+    public void showChemUseScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "ChemUseScreen.fxml");
     }
 
     /**
@@ -48,11 +48,11 @@ public class UseScreen {
     }
 
     /**
-     * When the New Use button is clicked, this method shows the UseDetailScreen.
+     * When the New Use button is clicked, this method shows the ChemUseDetailScreen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
-    public void showUseDetailScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showModal(actionEvent, "UseDetailScreen.fxml", "Use Details");
+    public void showChemUseDetailScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showModal(actionEvent, "ChemUseDetailScreen.fxml", "Use Details");
     }
 }

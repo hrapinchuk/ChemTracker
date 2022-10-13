@@ -19,7 +19,7 @@
                 <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
                     <children>
                         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#showChemicalScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Chemicals" />
-                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
+                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showChemUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
                         <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showReportScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Reports" />
                     </children>
                 </HBox>
@@ -123,7 +123,7 @@
                               <Insets right="15.0" />
                            </padding>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#showStockDetailScreen" styleClass="tealButton" text="+ Add to Stock" />
+                        <Button mnemonicParsing="false" onAction="#showChemStockDetailScreen" styleClass="tealButton" text="+ Add to Stock" />
                      </children>
                   </HBox>
                   <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">

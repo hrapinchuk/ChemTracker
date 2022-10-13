@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
+import model.Chemical;
 import utility.Utility;
 
 import java.io.IOException;
@@ -30,12 +31,12 @@ public class ChemicalDetailScreen {
     }
 
     /**
-     * When the Uses menu button is clicked, this method shows the UseScreen.
+     * When the Uses menu button is clicked, this method shows the ChemUseScreen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
-    public void showUseScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showScreen(actionEvent, "UseScreen.fxml");
+    public void showChemUseScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "ChemUseScreen.fxml");
     }
 
     /**
@@ -48,11 +49,20 @@ public class ChemicalDetailScreen {
     }
 
     /**
-     * When the Add to Stock button is clicked, this method opens a StockDetailScreen modal.
+     * When the Add to Stock button is clicked, this method opens a ChemStockDetailScreen modal.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
-    public void showStockDetailScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showModal(actionEvent, "StockDetailScreen.fxml", "Stock Details");
+    public void showChemStockDetailScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showModal(actionEvent, "ChemStockDetailScreen.fxml", "Stock Details");
+    }
+
+    /**
+     * This method receives data and populates the form if a chemical is being updated.
+     * @param chemical The Chemical object to be updated
+     */
+    public void showChemicalData(Chemical chemical) {
+        System.out.println("Chem Details!");
+        // FIXME...
     }
 }

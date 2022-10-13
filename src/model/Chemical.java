@@ -14,7 +14,7 @@ public class Chemical {
     private int unitID;
     private String unit;
     private String description;
-    private double totalStock;
+    private String currentStock;
 
     // Constructor
     /**
@@ -27,7 +27,8 @@ public class Chemical {
      * @param unitID An int representing the ID of the unit used to measure this chemical
      * @param unit A String representing the name of the unit used to measure this chemical
      * @param description A String representing a description of the chemical
-     * @param totalStock A double representing the current stock amount of this chemical
+     * @param currentStock A String representing the current stock amount with the appropriate unit
+     *                     of this chemical
      */
     public Chemical(int id,
                     String name,
@@ -37,7 +38,7 @@ public class Chemical {
                     int unitID,
                     String unit,
                     String description,
-                    double totalStock) {
+                    String currentStock) {
         this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
@@ -46,7 +47,7 @@ public class Chemical {
         this.unitID = unitID;
         this.unit = unit;
         this.description = description;
-        this.totalStock = totalStock;
+        this.currentStock = currentStock;
     }
 
     // Methods
@@ -180,18 +181,20 @@ public class Chemical {
 
     /**
      * This method gets the current stock amount of this chemical.
-     * @return A double representing the current stock amount of this chemical
+     * @return A String representing the current stock amount with the appropriate unit of this
+     * chemical
      */
-    public double getTotalStock() {
-        return totalStock;
+    public String getCurrentStock() {
+        return currentStock;
     }
 
     /**
      * This method sets the current stock amount of this chemical.
-     * @param totalStock A double representing the current stock amount of this chemical
+     * @param currentStock A String representing the current stock amount with the appropriate unit
+     *                     of this chemical
      */
-    public void setTotalStock(double totalStock) {
-        this.totalStock = totalStock;
+    public void setCurrentStock(String currentStock) {
+        this.currentStock = currentStock;
     }
 
     /**

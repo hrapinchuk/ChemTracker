@@ -19,7 +19,7 @@
                 <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
                     <children>
                         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#showChemicalScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Chemicals" />
-                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
+                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showChemUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
                         <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showReportScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Reports" />
                     </children>
                 </HBox>

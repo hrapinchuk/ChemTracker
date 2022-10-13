@@ -3,10 +3,10 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * This model class provides the ability to create and access Use objects.
+ * This model class provides the ability to create and access ChemUse objects.
  * @author Heather Rapinchuk
  */
-public class Use {
+public class ChemUse {
     // Variable declarations
     private int id;
     private LocalDateTime useDateTime;
@@ -39,18 +39,18 @@ public class Use {
      * @param area A double representing the number of acres covered during this use
      * @param areaDesc A String representing a description of the area covered during this use
      */
-    public Use(int id,
-               LocalDateTime useDateTime,
-               int chemID,
-               String chemical,
-               double amount,
-               int unitID,
-               String unit,
-               int methodID,
-               String method,
-               double dilution,
-               double area,
-               String areaDesc) {
+    public ChemUse(int id,
+                   LocalDateTime useDateTime,
+                   int chemID,
+                   String chemical,
+                   double amount,
+                   int unitID,
+                   String unit,
+                   int methodID,
+                   String method,
+                   double dilution,
+                   double area,
+                   String areaDesc) {
         this.id = id;
         this.useDateTime = useDateTime;
         this.chemID = chemID;

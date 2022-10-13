@@ -13,13 +13,13 @@
 }
 
 ComboBox {
-  -fx-background-radius: 0;
-  -fx-padding: 3px;
+    -fx-background-radius: 0;
+    -fx-padding: 3px;
 }
 
 DatePicker {
-  -fx-background-radius: 0;
-  -fx-height: 36px;
+    -fx-background-radius: 0;
+    -fx-height: 36px;
 }
 
 .displayMsg {
@@ -52,6 +52,10 @@ DatePicker {
 
 .header2 {
     -fx-font-size: 20px;
+}
+
+.maroonText {
+    -fx-text-fill: -maroon;
 }
 
 .menu {
@@ -89,6 +93,10 @@ DatePicker {
 
 .tealButton:hover {
     -fx-background-color: none;
+    -fx-text-fill: -teal;
+}
+
+.tealText {
     -fx-text-fill: -teal;
 }
 

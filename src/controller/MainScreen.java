@@ -30,12 +30,12 @@ public class MainScreen {
     }
 
     /**
-     * When the Uses menu button is clicked, this method shows the UseScreen.
+     * When the Uses menu button is clicked, this method shows the ChemUseScreen.
      * @param actionEvent The click event
      * @throws IOException If an input/output exception occurs
      */
-    public void showUseScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showScreen(actionEvent, "UseScreen.fxml");
+    public void showChemUseScreen(ActionEvent actionEvent) throws IOException {
+        Utility.showScreen(actionEvent, "ChemUseScreen.fxml");
     }
 
     /**

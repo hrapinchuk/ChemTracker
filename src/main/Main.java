@@ -1,5 +1,6 @@
 package main;
 
+import dao.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,10 +17,18 @@ import java.util.*;
 public class Main extends Application {
     /**
      * This is the first method that is called when running this program.
+     * This method opens a database connection, launches the program, and then ends by closing the
+     * database connection.
      * @param args Java command line arguments
      */
     public static void main(String[] args) {
+        // Open a database connection
+        DBConnection.openConnection();
+
         launch(args);
+
+        // Close the database connection
+        DBConnection.closeConnection();
     }
 
     /**

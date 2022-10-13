@@ -19,7 +19,7 @@
                 <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
                     <children>
                         <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#showChemicalScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Chemicals" />
-                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
+                        <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showChemUseScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Uses" />
                         <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#showReportScreen" prefHeight="50.0" prefWidth="100.0" styleClass="menuButton" text="Reports" />
                     </children>
                 </HBox>
@@ -59,14 +59,19 @@
                         <Button mnemonicParsing="false" onAction="#showChemicalDetailScreen" styleClass="tealButton" text="+ New Chemical" />
                      </children>
                   </HBox>
-                  <TextField promptText="Search" GridPane.columnIndex="1" />
+                  <TextField fx:id="searchText" onAction="#searchChemicals" promptText="Search" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <Label styleClass="displayMsg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="displayMsg" styleClass="displayMsg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TableView fx:id="chemTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="chemNameCol" prefWidth="125.0" text="Name" />
+                <TableColumn fx:id="chemMfrCol" prefWidth="125.0" text="Manufacturer" />
+                  <TableColumn fx:id="chemRegCol" prefWidth="125.0" text="Registration #" />
+                  <TableColumn fx:id="chemReentryCol" prefWidth="125.0" text="Reentry" />
+                  <TableColumn fx:id="chemStockCol" prefWidth="125.0" text="Current Stock" />
+                  <TableColumn fx:id="chemEditCol" prefWidth="60.0" />
+                  <TableColumn fx:id="chemDeleteCol" prefWidth="60.0" />
               </columns>
             </TableView>
          </children>
