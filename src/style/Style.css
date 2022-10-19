@@ -26,6 +26,11 @@ DatePicker {
     -fx-font-style: italic;
 }
 
+.displayMsgGrey {
+    -fx-font-style: italic;
+    -fx-text-fill: -grey;
+}
+
 .errorLabel {
     -fx-font-style: italic;
     -fx-text-fill: -maroon;

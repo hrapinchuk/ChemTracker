@@ -20,7 +20,7 @@ public abstract class DBChemStock {
      * @return An ObservableList of stock in the chem_stock table that pertain to the specified
      * chemical ID
      */
-    public static ObservableList<ChemStock> getStockByChemID(int chemID) {
+    public static ObservableList<ChemStock> getChemStockByChemID(int chemID) {
         // Variable declaration
         ObservableList<ChemStock> chemStock = FXCollections.observableArrayList();
 
@@ -49,5 +49,22 @@ public abstract class DBChemStock {
 
         // Return list of chemStock
         return chemStock;
+    }
+
+    /**
+     * This method deletes an entry from the chem_stock table.
+     * @param id An int representing the ID of the chemical stock entry to be deleted
+     */
+    public static void deleteChemStock(int id) {
+        try {
+            // Create and execute a query to delete the stock entry with the specified ID
+            String sql = "DELETE FROM chem_stock WHERE id = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

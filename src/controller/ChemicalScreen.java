@@ -49,6 +49,7 @@ public class ChemicalScreen implements Initializable {
     private Label displayMsg;
     private ObservableList<Chemical> allChemicals = FXCollections.observableArrayList();
 
+    // Methods
     /**
      * This method is called when the ChemicalScreen is initialized.
      * This method loads a list of all chemicals into the chemTable and creates Edit and Delete
@@ -92,7 +93,7 @@ public class ChemicalScreen implements Initializable {
                         controller.showChemicalData(rowChemical);
 
                         // Show screen
-                        Utility.showScreen(event, "ChemicalDetailScreen.fxml");
+                        Utility.showLoaderScreen(event, loader);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -120,7 +121,7 @@ public class ChemicalScreen implements Initializable {
                     Chemical rowChemical = (Chemical)getTableView().getItems().get(getIndex());
 
                     // Get any stock and uses associated with this chemical
-                    ObservableList<ChemStock> chemStock = DBChemStock.getStockByChemID(rowChemical.getId());
+                    ObservableList<ChemStock> chemStock = DBChemStock.getChemStockByChemID(rowChemical.getId());
                     ObservableList<ChemUse> chemUses = DBChemUse.getUsesByChemID(rowChemical.getId());
 
                     // If chemical has associated stock or uses, display alert and prevent deletion

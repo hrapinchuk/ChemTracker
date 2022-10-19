@@ -52,4 +52,13 @@ public class Unit {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * This method formats a Unit object that is converted to a String.
+     * @return A String that indicates the unit's name
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
 }
