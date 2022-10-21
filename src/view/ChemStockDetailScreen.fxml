@@ -24,21 +24,21 @@
   </rowConstraints>
    <children>
       <Label styleClass="header1" text="Stock Details" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Amount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-      <Label text="Purchase Date" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+      <Label fx:id="stockAmountLabel" text="Amount*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="stockAmountText" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="stockAmountError" styleClass="errorLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+      <Label text="Add Date*" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label fx:id="stockAddDateError" styleClass="errorLabel" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
       <HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="8">
          <children>
-            <Button mnemonicParsing="false" styleClass="tealButton" text="Add">
+            <Button fx:id="saveStockBtn" mnemonicParsing="false" onAction="#saveStock" styleClass="tealButton" text="Add">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="19.0" mnemonicParsing="false" styleClass="greyButton" text="Cancel" />
+            <Button layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#cancelSaveStock" styleClass="greyButton" text="Cancel" />
          </children>
       </HBox>
+      <DatePicker fx:id="stockAddDatePicker" maxWidth="1.7976931348623157E308" prefHeight="32.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    </children>
 </GridPane>

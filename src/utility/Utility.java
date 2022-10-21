@@ -2,6 +2,7 @@ package utility;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import model.TextInputInfo;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,24 +84,23 @@ public class Utility {
     }
 
     /**
-     * This method shows a modal whose object hierarchy has already been loaded.
-     * @param event The event prompting this method call
-     * @param loader An FXMLLoader that has already loaded the view to be displayed in the modal
-     * @param screenTitle A String containing the title to give the modal window
+     * This method closes a modal screen.
+     * @param actionEvent The event prompting this method call
+     * @throws IOException If an input/output exception occurs
      */
-    public static void showLoaderModal(Event event, FXMLLoader loader, String screenTitle){
-        URL styleURL = Objects.requireNonNull(Utility.class.getResource("/style/Style.css"));
-        Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Stage stage = new Stage();
-        Parent root = loader.getRoot();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(styleURL.toExternalForm());
-        stage.setTitle(screenTitle);
-        stage.setScene(scene);
-        // Adapted from https://www.tabnine.com/code/java/methods/javafx.stage.Stage/initModality
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(primaryStage);
-        stage.show();
+    public static void closeModal(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * This method fires a WINDOW_SHOWN event in the current stage's parent stage.
+     * @param actionEvent The event prompting this method call
+     */
+    public static void fireParentWindowShownEvent(ActionEvent actionEvent) {
+        Stage currentStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage parentStage = (Stage)currentStage.getOwner();
+        parentStage.fireEvent(new WindowEvent(parentStage, WindowEvent.WINDOW_SHOWN));
     }
 
     /**
@@ -207,44 +209,45 @@ public class Utility {
     }
 
     /**
-     * This method performs several validations on a String input and determines whether it is valid.
-     * This method checks whether a user-entered String contains a value, does not exceed its
+     * This method performs validations on a user-entered value and determines whether it is valid.
+     * This method checks whether a TextInputControl's value is not empty, does not exceed its
      * maxLength, and/or matches a provided pattern. If any of the checks return false, an error
      * message is displayed and the method returns false.
-     * @param inputString The String being validated
-     * @param required A boolean indicating whether the String must contain a value
-     * @param maxLength An int representing the maximum length of the String
-     * @param pattern A String containing a regular expression, representing an expected pattern
-     * @param errorLabel A Label where an error message will be displayed, if needed
+     * @param inputControl The TextInputControl whose value is being validated
+     * @param inputInfo A TextInputInfo object containing information about the TextInputControl
+     *                  that is needed to perform the data validation
+     * @param errorLabel A Label where an error message may be displayed, if needed
      * @return A boolean representing whether the input is valid (true) or not (false)
      */
-    public static boolean validateTextInput(String inputString,
-                                            boolean required,
-                                            int maxLength,
-                                            String pattern,
+    public static boolean validateTextInput(TextInputControl inputControl,
+                                            TextInputInfo inputInfo,
                                             Label errorLabel) {
         // Variable declarations
+        String inputString = inputControl.getText();
         boolean validInput = true;
         StringBuilder errorSB = new StringBuilder();
 
         // If input is required, validate that input is not null
-        if (required && !validateTextInputNotNull(inputString)) {
+        if (inputInfo.isRequired() && !validateTextInputNotNull(inputString)) {
             validInput = false;
             errorSB.append("Required");
         }
 
         // Validate that input does not exceed maxLength
-        if (!validateTextInputLength(inputString, maxLength)) {
+        if (!validateTextInputLength(inputString, inputInfo.getMaxLength())) {
             validInput = false;
-            String lengthError = "Cannot exceed " + maxLength + " characters";
+            String lengthError = "Cannot exceed " + inputInfo.getMaxLength() + " characters";
             appendToStringBuilder(lengthError, errorSB);
+
+            // Shorten input to maximum allowable length
+            String maxString = inputString.substring(0, inputInfo.getMaxLength());
+            inputControl.setText(maxString);
         }
 
         // If pattern is provided, validate that input matches pattern
-        if (pattern != null && !validateTextInputPattern(inputString, pattern)) {
+        if (inputInfo.getPattern() != null && !validateTextInputPattern(inputString, inputInfo.getPattern())) {
             validInput = false;
-            String patternError = "Invalid pattern";
-            appendToStringBuilder(patternError, errorSB);
+            appendToStringBuilder(inputInfo.getPatternError(), errorSB);
         }
 
         // Display error message and return boolean indicating whether input is valid
@@ -275,23 +278,21 @@ public class Utility {
     }
 
     /**
-     * This method adds a ChangeListener to a TextInput to enforce its maxLength as a user types.
-     * @param textInput The TextInputControl whose maxLength is being enforced
-     * @param maxLength An int representing the max number of characters allowed in the textInput
-     * @param errorLabel A Label where an error message may be displayed
+     * This method adds a ChangeListener to a TextInputControl to perform data validations on change.
+     * @param inputControl The TextInputControl whose value is being validated
+     * @param inputInfo A TextInputInfo object containing information about the TextInputControl
+     *                  that is needed to perform the data validation
+     * @param errorLabel A Label where an error message may be displayed, if needed
      */
-    public static void enforceMaxLength(TextInputControl textInput, int maxLength, Label errorLabel) {
-        // Implement ChangeListener to shorten text input if user enters input that is greater than
-        // the allowable length
+    public static void validateTextInputOnChange(TextInputControl inputControl,
+                                                 TextInputInfo inputInfo,
+                                                 Label errorLabel) {
+        // Implement ChangeListener to validate text input on change
         ChangeListener<String> listener = ((observableValue, oldValue, newValue) -> {
-            if (!validateTextInputLength(textInput.getText(), maxLength)) {
-                String maxString = textInput.getText(0, maxLength);
-                textInput.setText(maxString);
-                showAndFadeMessage(errorLabel, "Cannot exceed " + maxLength + " characters");
-            }
+            validateTextInput(inputControl, inputInfo, errorLabel);
         });
 
-        // Add change listener to textInput
-        textInput.textProperty().addListener(listener);
+        // Add change listener to inputControl
+        inputControl.textProperty().addListener(listener);
     }
 }

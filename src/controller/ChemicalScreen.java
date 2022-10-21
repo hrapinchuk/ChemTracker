@@ -40,9 +40,9 @@ public class ChemicalScreen implements Initializable {
     @FXML
     private TableColumn<Chemical, String> chemStockCol;
     @FXML
-    private TableColumn chemEditCol;
+    private TableColumn<Chemical, Object> chemEditCol;
     @FXML
-    private TableColumn chemDeleteCol;
+    private TableColumn<Chemical, Object> chemDeleteCol;
     @FXML
     private TextField searchText;
     @FXML
@@ -122,7 +122,7 @@ public class ChemicalScreen implements Initializable {
 
                     // Get any stock and uses associated with this chemical
                     ObservableList<ChemStock> chemStock = DBChemStock.getChemStockByChemID(rowChemical.getId());
-                    ObservableList<ChemUse> chemUses = DBChemUse.getUsesByChemID(rowChemical.getId());
+                    ObservableList<ChemUse> chemUses = DBChemUse.getChemUsesByChemID(rowChemical.getId());
 
                     // If chemical has associated stock or uses, display alert and prevent deletion
                     if (!chemStock.isEmpty() || !chemUses.isEmpty()) {
@@ -208,10 +208,7 @@ public class ChemicalScreen implements Initializable {
     public void searchChemicals(ActionEvent actionEvent) {
         // Variable declarations
         String searchString = searchText.getText();
-        ObservableList<Chemical> matchingChemicals = FXCollections.observableArrayList();
-
-        // Call method to search for chemicals that match the provided search
-        matchingChemicals = DBChemical.getChemicalsBySearch(searchString);
+        ObservableList<Chemical> matchingChemicals = DBChemical.getChemicalsBySearch(searchString);
 
         // Display results in chemTable
         chemTable.setItems(matchingChemicals);
