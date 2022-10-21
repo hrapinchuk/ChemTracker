@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ChemStock;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,6 +50,45 @@ public abstract class DBChemStock {
 
         // Return list of chemStock
         return chemStock;
+    }
+
+    /**
+     * This method inserts a new entry into the chem_stock table.
+     * @param chemStock A ChemStock object containing the data to insert into the chem_stock table
+     */
+    public static void createChemStock(ChemStock chemStock) {
+        try {
+            // Create and execute query to insert a new entry into the chem_stock table
+            String sql = "INSERT INTO chem_stock (chem_id, amount, add_date) VALUES (?, ?, ?)";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, chemStock.getChemID());
+            ps.setDouble(2, chemStock.getAmount());
+            ps.setDate(3, Date.valueOf(chemStock.getAddDate()));
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method updates an existing entry in the chem_stock table.
+     * @param chemStock A ChemStock object containing the data to update the selected entry
+     */
+    public static void updateChemStock(ChemStock chemStock) {
+        try {
+            // Create and execute query to update an existing stock entry
+            String sql = "UPDATE chem_stock SET chem_id = ?, amount = ?, add_date = ? WHERE id = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, chemStock.getChemID());
+            ps.setDouble(2, chemStock.getAmount());
+            ps.setDate(3, Date.valueOf(chemStock.getAddDate()));
+            ps.setInt(4, chemStock.getId());
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ public class ChemUse {
     private double dilution;
     private double area;
     private String areaDesc;
+    private String amountDesc;
 
     // Constructor
     /**
@@ -63,6 +64,7 @@ public class ChemUse {
         this.dilution = dilution;
         this.area = area;
         this.areaDesc = areaDesc;
+        this.amountDesc = amount + " " + unit;
     }
 
     // Methods
@@ -199,7 +201,7 @@ public class ChemUse {
      * This method gets the name of the method used to spread the chemical.
      * @return A String representing the name of the method used to spread the chemical
      */
-    public String getMethodName() {
+    public String getMethod() {
         return method;
     }
 
@@ -207,7 +209,7 @@ public class ChemUse {
      * This method sets the name of the method used to spread the chemical.
      * @param method A String representing the name of the method used to spread the chemical
      */
-    public void setMethodName(String method) {
+    public void setMethod(String method) {
         this.method = method;
     }
 
@@ -259,5 +261,21 @@ public class ChemUse {
      */
     public void setAreaDesc(String areaDesc) {
         this.areaDesc = areaDesc;
+    }
+
+    /**
+     * This method gets a description of the amount, which contains the amount and the unit used.
+     * @return A String describing the amount of chemical and unit used during this use
+     */
+    public String getAmountDesc() {
+        return amountDesc;
+    }
+
+    /**
+     * This method sets a description of the amount.
+     * @param amountDesc A String describing the amount of chemical and unit used during this use
+     */
+    public void setAmountDesc(String amountDesc) {
+        this.amountDesc = amountDesc;
     }
 }

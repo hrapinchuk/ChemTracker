@@ -1,7 +1,6 @@
 package controller;
 
 import dao.DBChemStock;
-import dao.DBChemUse;
 import dao.DBChemical;
 import dao.DBUnit;
 import javafx.collections.FXCollections;
@@ -10,18 +9,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.ChemStock;
-import model.ChemUse;
 import model.Chemical;
+import model.TextInputInfo;
 import model.Unit;
 import utility.Utility;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -74,12 +79,45 @@ public class ChemicalDetailScreen implements Initializable {
     private Button addStockBtn;
     private int chemID = -1;
     private ObservableList<ChemStock> chemStock = FXCollections.observableArrayList();
+    private final TextInputInfo chemNameInputInfo = new TextInputInfo(
+            true,
+            50,
+            null,
+            null
+    );
+    private final TextInputInfo chemMfrInputInfo = new TextInputInfo(
+            true,
+            50,
+            null,
+            null
+    );
+    private final TextInputInfo chemRegInputInfo = new TextInputInfo(
+            true,
+            50,
+            null,
+            null
+    );
+    private final TextInputInfo chemReentryInputInfo = new TextInputInfo(
+            true,
+            50,
+            null,
+            null
+    );
+    private final TextInputInfo chemDescInputInfo = new TextInputInfo(
+            false,
+            500,
+            null,
+            null
+    );
 
     // Methods
     /**
-     *
-     * @param url
-     * @param resourceBundle
+     * This method is called when the ChemicalDetailScreen is initialized.
+     * This method populates a ComboBox with a list of all units, adds change listeners to text
+     * inputs to ensure that input does not exceed its max length, and disables the Add to Stock
+     * button if a Chemical is being created.
+     * @param url An object used to resolve the location of the root object
+     * @param resourceBundle A bundle of objects that localize the root object
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -91,12 +129,12 @@ public class ChemicalDetailScreen implements Initializable {
         chemUnitCombo.setVisibleRowCount(5);
         chemUnitCombo.setPromptText("Select Unit");
 
-        // Add change listeners to enforce the maxLength of text inputs
-        Utility.enforceMaxLength(chemNameText, 50, chemNameError);
-        Utility.enforceMaxLength(chemMfrText, 50, chemMfrError);
-        Utility.enforceMaxLength(chemRegText, 50, chemRegError);
-        Utility.enforceMaxLength(chemReentryText, 50, chemReentryError);
-        Utility.enforceMaxLength(chemDescText, 500, chemDescError);
+        // Add change listeners to validate text input values on change
+        Utility.validateTextInputOnChange(chemNameText, chemNameInputInfo, chemNameError);
+        Utility.validateTextInputOnChange(chemMfrText, chemMfrInputInfo, chemMfrError);
+        Utility.validateTextInputOnChange(chemRegText, chemRegInputInfo, chemRegError);
+        Utility.validateTextInputOnChange(chemReentryText, chemReentryInputInfo, chemReentryError);
+        Utility.validateTextInputOnChange(chemDescText, chemDescInputInfo, chemDescError);
 
         // Disable Add to Stock button
         addStockBtn.setDisable(true);
@@ -113,7 +151,6 @@ public class ChemicalDetailScreen implements Initializable {
         chemRegText.setText(chemical.getRegNum());
         chemReentryText.setText(chemical.getReentry());
         chemDescText.setText(chemical.getDescription());
-        chemStockLabel.setText(chemical.getCurrentStock());
 
         // Select appropriate unit in ComboBox
         for (Unit u : chemUnitCombo.getItems()) {
@@ -150,17 +187,8 @@ public class ChemicalDetailScreen implements Initializable {
                         // Get stock entry from selected row
                         ChemStock rowStock = (ChemStock)getTableView().getItems().get(getIndex());
 
-                        // Load view of the ChemStockDetailScreen
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(getClass().getResource("/view/ChemStockDetailScreen.fxml"));
-                        loader.load();
-
-                        // Pass selected stock object to controller
-                        ChemStockDetailScreen controller = loader.getController();
-                        controller.showChemStockData(rowStock);
-
-                        // Show modal
-                        Utility.showLoaderModal(event, loader, "Stock Details");
+                        // Call method to pass data to and show the ChemicalDetailScreen
+                        passDataAndShowChemStockDetailScreen(rowStock, event);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -248,7 +276,42 @@ public class ChemicalDetailScreen implements Initializable {
      * @throws IOException If an input/output exception occurs
      */
     public void showChemStockDetailScreen(ActionEvent actionEvent) throws IOException {
-        Utility.showModal(actionEvent, "ChemStockDetailScreen.fxml", "Stock Details");
+        passDataAndShowChemStockDetailScreen(null, actionEvent);
+    }
+
+    /**
+     * This method passes ChemStock data and a chemical ID and opens the ChemStockDetailScreen.
+     * @param chemStock The ChemStock object to pass
+     * @param event The event prompting this method call
+     * @throws IOException If an input/output exception occurs
+     */
+    public void passDataAndShowChemStockDetailScreen(ChemStock chemStock, ActionEvent event)
+            throws IOException {
+        // Load view of the ChemStockDetailScreen
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/ChemStockDetailScreen.fxml"));
+        loader.load();
+
+        // Pass selected stock object and chemID to controller
+        ChemStockDetailScreen controller = loader.getController();
+        controller.showChemStockData(chemStock, chemID);
+
+        // Show modal
+        URL styleURL = Objects.requireNonNull(Utility.class.getResource("/style/Style.css"));
+        Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
+        Parent root = loader.getRoot();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(styleURL.toExternalForm());
+        stage.setTitle("Stock Details");
+        stage.setScene(scene);
+        // Adapted from https://www.tabnine.com/code/java/methods/javafx.stage.Stage/initModality
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(primaryStage);
+        stage.show();
+
+        // Create event handler to refresh stock table when modal is closed
+        primaryStage.setOnShown(windowEvent -> refreshStockTable());
     }
 
     /**
@@ -260,51 +323,33 @@ public class ChemicalDetailScreen implements Initializable {
     public void saveChemical(ActionEvent actionEvent) {
         try {
             // Perform data validations
-            // Validate name
             boolean validName = Utility.validateTextInput(
-                    chemNameText.getText(),
-                    true,
-                    50,
-                    null,
+                    chemNameText,
+                    chemNameInputInfo,
                     chemNameError
             );
-
-            // Validate manufacturer
             boolean validMfr = Utility.validateTextInput(
-                    chemMfrText.getText(),
-                    true,
-                    50,
-                    null,
+                    chemMfrText,
+                    chemMfrInputInfo,
                     chemMfrError
             );
-
-            // Validate registration number
             boolean validReg = Utility.validateTextInput(
-                    chemRegText.getText(),
-                    true,
-                    50,
-                    null,
+                    chemRegText,
+                    chemRegInputInfo,
                     chemRegError
             );
-
-            // Validate reentry period
             boolean validReentry = Utility.validateTextInput(
-                    chemReentryText.getText(),
-                    true,
-                    50,
-                    null,
+                    chemReentryText,
+                    chemReentryInputInfo,
                     chemReentryError
             );
-
-            // Validate unit
-            boolean validUnit = Utility.validateComboBoxInput(chemUnitCombo, chemUnitError);
-
-            // Validate description
+            boolean validUnit = Utility.validateComboBoxInput(
+                    chemUnitCombo,
+                    chemUnitError
+            );
             boolean validDesc = Utility.validateTextInput(
-                    chemDescText.getText(),
-                    false,
-                    500,
-                    null,
+                    chemDescText,
+                    chemDescInputInfo,
                     chemDescError
             );
 
@@ -362,7 +407,7 @@ public class ChemicalDetailScreen implements Initializable {
     }
 
     /**
-     * This event handler redirects the user back to the ChemicalScreen.
+     * This event handler redirects the user when the Cancel button is clicked.
      * When the Cancel button is clicked, this event confirms that the user wants to cancel adding
      * or updating a chemical. Upon confirmation, this method redirects a user to the ChemicalScreen.
      * @param actionEvent The click event
@@ -386,5 +431,6 @@ public class ChemicalDetailScreen implements Initializable {
     public void refreshStockTable() {
         chemStock = DBChemStock.getChemStockByChemID(chemID);
         stockTable.setItems(chemStock);
+        chemStockLabel.setText(Objects.requireNonNull(DBChemical.getChemical(chemID)).getCurrentStock());
     }
 }

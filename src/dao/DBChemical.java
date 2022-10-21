@@ -7,7 +7,6 @@ import model.Chemical;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 /**
  * This class provides access to chemical data in the database.
@@ -67,6 +66,57 @@ public abstract class DBChemical {
 
         // Return list of allChemicals
         return allChemicals;
+    }
+
+    /**
+     * This method gets a chemical from the chemical table whose ID matches the provided ID.
+     * @param id An int representing the ID of the chemical to fetch
+     * @return A Chemical object whose ID matches the provided ID
+     */
+    public static Chemical getChemical(int id) {
+        try {
+            // Create and execute a query to select a chemical from the chemical table
+            String sql = "SELECT c.*, u.name AS unit, " +
+                    "((SELECT IFNULL(SUM(amount),0) FROM chem_stock cs WHERE cs.chem_id = c.id) - " +
+                    "(SELECT IFNULL(SUM(amount),0) FROM chem_use cu WHERE cu.chem_id = c.id)) " +
+                    "AS current_stock " +
+                    "FROM chemical c " +
+                    "LEFT JOIN unit u ON c.unit_id = u.id " +
+                    "WHERE c.id = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through results
+            while (rs.next()) {
+                // Create and return Chemical object with the matching ID
+                String name = rs.getString("name");
+                String manufacturer = rs.getString("manufacturer");
+                String regNum = rs.getString("reg_num");
+                String reentry = rs.getString("reentry");
+                int unitID = rs.getInt("unit_id");
+                String unit = rs.getString("unit");
+                String description = rs.getString("description");
+                String currentStock = rs.getDouble("current_stock") + " " + unit;
+                return new Chemical(
+                        id,
+                        name,
+                        manufacturer,
+                        regNum,
+                        reentry,
+                        unitID,
+                        unit,
+                        description,
+                        currentStock
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return null
+        return null;
     }
 
     /**
