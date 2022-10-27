@@ -65,12 +65,12 @@
                 <Label fx:id="displayMsg" styleClass="displayMsg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TableView fx:id="useTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <columns>
-                        <TableColumn fx:id="useDateTimeCol" prefWidth="100.0" text="Date/Time" />
+                        <TableColumn fx:id="useDateTimeCol" prefWidth="140.0" text="Date/Time" />
                         <TableColumn fx:id="useChemCol" prefWidth="125.0" text="Chemical" />
-                  <TableColumn fx:id="useAmountCol" prefWidth="100.0" text="Amount" />
-                  <TableColumn fx:id="useMethodCol" prefWidth="100.0" text="Method" />
-                  <TableColumn fx:id="useDilutionCol" prefWidth="100.0" text="Dilution (gal)" />
-                  <TableColumn fx:id="useAreaCol" prefWidth="100.0" text="Area (acres)" />
+                  <TableColumn fx:id="useAmountCol" prefWidth="90.0" text="Amount" />
+                  <TableColumn fx:id="useMethodCol" prefWidth="90.0" text="Method" />
+                  <TableColumn fx:id="useDilutionCol" prefWidth="90.0" text="Dilution (gal)" />
+                  <TableColumn fx:id="useAreaCol" prefWidth="90.0" text="Area (acres)" />
                   <TableColumn fx:id="useEditCol" prefWidth="60.0" />
                   <TableColumn fx:id="useDeleteCol" prefWidth="60.0" />
                     </columns>

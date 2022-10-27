@@ -168,7 +168,7 @@ public class ChemStockDetailScreen implements Initializable {
     public void cancelSaveStock(ActionEvent actionEvent) throws IOException {
         // Display alert to confirm that user wants to cancel
         boolean confirmCancel = Utility.showConfAlert(
-                "Are you sure that you want to Cancel? All unsaved changes will be lost."
+                "Are you sure that you want to cancel? All unsaved changes will be lost."
         );
 
         // Upon confirmation, close modal

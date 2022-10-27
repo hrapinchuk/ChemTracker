@@ -17,6 +17,9 @@ import model.TextInputInfo;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -230,7 +233,7 @@ public class Utility {
         // If input is required, validate that input is not null
         if (inputInfo.isRequired() && !validateTextInputNotNull(inputString)) {
             validInput = false;
-            errorSB.append("Required");
+            appendToStringBuilder("Required", errorSB);
         }
 
         // Validate that input does not exceed maxLength
@@ -294,5 +297,55 @@ public class Utility {
 
         // Add change listener to inputControl
         inputControl.textProperty().addListener(listener);
+    }
+
+    /**
+     * This method converts a time from a 12-hour clock to a 24-hour clock.
+     * This method receives a date, time, and whether the time occurs in AM or PM. Using the
+     * received information, this method creates and returns a LocalDateTime on a 24-hour clock.
+     * @param timeString A String representing a time on a 12-hour clock
+     * @param isAM A boolean representing whether the timeString is in AM or PM
+     * @param localDate A LocalDate object representing the date to associate with the time
+     * @return A LocalDateTime object representing the localDate and timeString on a 24-hour clock
+     */
+    public static LocalDateTime convertTo24Hr(String timeString, boolean isAM, LocalDate localDate) {
+        // Variable declarations
+        LocalTime hrTwelve = LocalTime.of(12, 00);
+        LocalTime hrThirteen = LocalTime.of(13, 00);
+        LocalTime hrOne = LocalTime.of(01, 00);
+
+        // If timeString needs a preceding 0, prepend it
+        if (timeString.length() <= 4) {
+            timeString = "0" + timeString;
+        }
+
+        // Convert timeString to LocalTime
+        LocalTime timeLT = LocalTime.parse(timeString);
+
+        // If time is between 12:00 and 12:59 AM, subtract 12 hours
+        if (isAM && (timeLT.equals(hrTwelve) || (timeLT.isAfter(hrTwelve) && timeLT.isBefore(hrThirteen)))) {
+            timeLT = timeLT.minusHours(12);
+
+        // If time is between 1:00 and 11:59 PM, add twelve hours
+        } else if (!isAM && (timeLT.equals(hrOne) || (timeLT.isAfter(hrOne) && timeLT.isBefore(hrTwelve)))) {
+            timeLT = timeLT.plusHours(12);
+        }
+
+        // Return LocalDateTime
+        return LocalDateTime.of(localDate, timeLT);
+    }
+
+    /**
+     * This method determines whether a provided time occurs in AM or PM.
+     * @param localTime The LocalTime object to be evaluated
+     * @return A boolean indicating whether localTime occurs in AM (true) or PM (false)
+     */
+    public static boolean isAM(LocalTime localTime) {
+        // Variable declarations
+        LocalTime hrZero = LocalTime.of(0, 0, 0);
+        LocalTime hrTwelve = LocalTime.of(12, 0, 0);
+
+        // Determine whether localTime occurs in AM or PM, and return accordingly
+        return (localTime.equals(hrZero) || localTime.isAfter(hrZero)) && localTime.isBefore(hrTwelve);
     }
 }

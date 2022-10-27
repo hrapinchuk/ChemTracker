@@ -3,11 +3,8 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ChemUse;
-import model.Chemical;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 /**
@@ -203,6 +200,153 @@ public abstract class DBChemUse {
 
         // Return list of matchingChemUses
         return matchingChemUses;
+    }
+
+    /**
+     * This method gets chemical uses from the chem_use table that occurred in a specified month and
+     * year.
+     * @param month An int representing the month in which fetched chemical uses occurred
+     * @param year An int representing the year in which fetched chemical uses occurred
+     * @return An ObservableList of chemical uses that occurred within the specified month and year
+     */
+    public static ObservableList<ChemUse> getChemUsesByDate(int month, int year) {
+        // Variable declaration
+        ObservableList<ChemUse> chemUses = FXCollections.observableArrayList();
+
+        try {
+            // Create and execute a query to select all uses from the specified month and year
+            String sql = "SELECT cu.*, c.name AS chemical, c.unit_id, u.name AS unit, m.name as method " +
+                    "FROM chem_use cu " +
+                    "LEFT JOIN chemical c ON cu.chem_id = c.id " +
+                    "LEFT JOIN unit u ON c.unit_id = u.id " +
+                    "LEFT JOIN method m ON cu.method_id = m.id " +
+                    "WHERE MONTH(use_datetime) = ? AND YEAR(use_datetime) = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, month);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through results
+            while (rs.next()) {
+                // Create a ChemUse object from the current row
+                int id = rs.getInt("id");
+                LocalDateTime useDateTime = rs.getTimestamp("use_datetime").toLocalDateTime();
+                int chemID = rs.getInt("chem_id");
+                String chemical = rs.getString("chemical");
+                double amount = rs.getDouble("amount");
+                int unitID = rs.getInt("unit_id");
+                String unit = rs.getString("unit");
+                int methodID = rs.getInt("method_id");
+                String method = rs.getString("method");
+                double dilution = rs.getDouble("dilution");
+                double area = rs.getDouble("area");
+                String areaDesc = rs.getString("area_desc");
+                ChemUse thisUse = new ChemUse(
+                        id,
+                        useDateTime,
+                        chemID,
+                        chemical,
+                        amount,
+                        unitID,
+                        unit,
+                        methodID,
+                        method,
+                        dilution,
+                        area,
+                        areaDesc
+                );
+
+                // Add ChemUse to list of chemUses
+                chemUses.add(thisUse);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return list of chemUses
+        return chemUses;
+    }
+
+    /**
+     * This method gets a list of all distinct years in which there were chemical uses.
+     * @return An ObservableList of distinct years in which chemical uses occurred
+     */
+    public static ObservableList<Integer> getChemUseYears() {
+        // Variable declaration
+        ObservableList<Integer> distinctYears = FXCollections.observableArrayList();
+
+        try {
+            // Create and execute a query to select all distinct years from chem_use table
+            String sql = "SELECT DISTINCT(YEAR(use_datetime)) AS year FROM chem_use";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through results
+            while (rs.next()) {
+                // Add year from current row.
+                int year = rs.getInt("year");
+                distinctYears.add(year);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return list of distinctYears
+        return distinctYears;
+    }
+
+    /**
+     * This method inserts a new entry into the chem_use table.
+     * @param chemUse A ChemUse object containing the data to insert into the chem_use table
+     */
+    public static void createChemUse(ChemUse chemUse) {
+        try {
+            // Create and execute query to insert a new entry into the chem_use table
+            String sql = "INSERT INTO chem_use " +
+                    "(use_datetime, chem_id, amount, method_id, dilution, area, area_desc) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setTimestamp(1, Timestamp.valueOf(chemUse.getUseDateTime()));
+            ps.setInt(2, chemUse.getChemID());
+            ps.setDouble(3, chemUse.getAmount());
+            ps.setInt(4, chemUse.getMethodID());
+            ps.setDouble(5, chemUse.getDilution());
+            ps.setDouble(6, chemUse.getArea());
+            ps.setString(7, chemUse.getAreaDesc());
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method updates an existing entry in the chem_use table.
+     * @param chemUse A ChemUse object containing the data to update the selected entry
+     */
+    public static void updateChemUse(ChemUse chemUse) {
+        try {
+            // Create and execute query to update an existing use entry
+            String sql = "UPDATE chem_use " +
+                    "SET use_datetime = ?, chem_id = ?, amount = ?, method_id = ?, dilution = ?, " +
+                    "area = ?, area_desc = ? " +
+                    "WHERE id = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setTimestamp(1, Timestamp.valueOf(chemUse.getUseDateTime()));
+            ps.setInt(2, chemUse.getChemID());
+            ps.setDouble(3, chemUse.getAmount());
+            ps.setInt(4, chemUse.getMethodID());
+            ps.setDouble(5, chemUse.getDilution());
+            ps.setDouble(6, chemUse.getArea());
+            ps.setString(7, chemUse.getAreaDesc());
+            ps.setInt(8, chemUse.getId());
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -60,18 +60,22 @@
                         </HBox>
                   <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.valignment="CENTER">
                      <children>
-                        <ComboBox prefWidth="100.0" promptText="Month" />
-                        <ComboBox prefWidth="100.0" promptText="Year" />
-                        <Button mnemonicParsing="false" styleClass="tealButton" text="Run Report" />
+                        <ComboBox fx:id="monthCombo" prefWidth="100.0" promptText="Month" />
+                        <ComboBox fx:id="yearCombo" prefWidth="100.0" promptText="Year" />
+                        <Button mnemonicParsing="false" onAction="#runReport" styleClass="tealButton" text="Run Report" />
                      </children>
                   </HBox>
                     </children>
                 </GridPane>
-                <Label styleClass="displayMsg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <Label fx:id="displayMsg" styleClass="displayMsg" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TableView fx:id="reportTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="dateTimeCol" prefWidth="175.0" text="Date/Time" />
+                        <TableColumn fx:id="chemCol" prefWidth="150.0" text="Chemical" />
+                  <TableColumn fx:id="methodCol" prefWidth="100.0" text="Method" />
+                  <TableColumn fx:id="amountCol" prefWidth="100.0" text="Amount" />
+                  <TableColumn fx:id="dilutionCol" prefWidth="100.0" text="Dilution (gal)" />
+                  <TableColumn fx:id="areaCol" prefWidth="100.0" text="Area (acres)" />
                     </columns>
                 </TableView>
             </children>

@@ -23,15 +23,15 @@
     <children>
         <Label styleClass="header1" text="Use Details" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label text="Area Description" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+        <Label fx:id="useAreaDescError" styleClass="errorLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
         <HBox alignment="BOTTOM_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
             <children>
-                <Button mnemonicParsing="false" styleClass="tealButton" text="Add">
+                <Button fx:id="saveUseBtn" mnemonicParsing="false" onAction="#saveUse" styleClass="tealButton" text="Add">
                     <HBox.margin>
                         <Insets right="15.0" />
                     </HBox.margin>
                 </Button>
-                <Button layoutX="10.0" layoutY="19.0" mnemonicParsing="false" styleClass="greyButton" text="Cancel" />
+                <Button fx:id="cancelSaveUseBtn" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" onAction="#cancelSaveUse" styleClass="greyButton" text="Cancel" />
             </children>
         </HBox>
       <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -54,34 +54,34 @@
          <children>
             <Label text="Date/Time*" />
             <Label text="Chemical Used*" GridPane.columnIndex="2" />
-            <Label text="Amount*" GridPane.rowIndex="3" />
+            <Label fx:id="useAmountLabel" text="Amount*" GridPane.rowIndex="3" />
             <Label text="Application Method*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="Dilution (gallons)" GridPane.rowIndex="6" />
             <Label text="Area (acres)*" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Label styleClass="errorLabel" text="Label" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Label styleClass="errorLabel" text="Label" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-            <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-            <Label styleClass="errorLabel" text="Label" GridPane.rowIndex="8" GridPane.valignment="TOP" />
-            <Label styleClass="errorLabel" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="8" GridPane.valignment="TOP" />
+            <Label fx:id="useDateTimeError" styleClass="errorLabel" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label fx:id="useChemError" styleClass="errorLabel" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label fx:id="useAmountError" styleClass="errorLabel" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label fx:id="useMethodError" styleClass="errorLabel" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label fx:id="useDilutionError" styleClass="errorLabel" GridPane.rowIndex="8" GridPane.valignment="TOP" />
+            <Label fx:id="useAreaError" styleClass="errorLabel" GridPane.columnIndex="2" GridPane.rowIndex="8" GridPane.valignment="TOP" />
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
                <children>
-                  <DatePicker prefHeight="32.0" />
-                  <TextField minWidth="-Infinity" prefWidth="100.0" />
-                  <ToggleButton minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="AM">
+                  <DatePicker fx:id="useDatePicker" prefHeight="32.0" />
+                  <TextField fx:id="useTimeText" minWidth="-Infinity" prefWidth="100.0" />
+                  <ToggleButton fx:id="useTimeAMBtn" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="AM">
                      <toggleGroup>
                         <ToggleGroup fx:id="timeToggle" />
                      </toggleGroup></ToggleButton>
-                  <ToggleButton layoutX="210.0" layoutY="15.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="PM" toggleGroup="$timeToggle" />
+                  <ToggleButton fx:id="useTimePMBtn" layoutX="210.0" layoutY="15.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="PM" toggleGroup="$timeToggle" />
                </children>
             </HBox>
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField GridPane.rowIndex="4" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <TextField GridPane.rowIndex="7" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <ComboBox fx:id="useChemCombo" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="useAmountText" GridPane.rowIndex="4" />
+            <ComboBox fx:id="useMethodCombo" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField fx:id="useDilutionText" GridPane.rowIndex="7" />
+            <TextField fx:id="useAreaText" GridPane.columnIndex="2" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextArea fx:id="useAreaDescText" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     </children>
 </GridPane>

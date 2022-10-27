@@ -52,4 +52,13 @@ public class Method {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * This method formats a Method object that is converted to a String.
+     * @return A String that indicates the method's name
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
 }
