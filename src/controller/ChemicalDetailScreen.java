@@ -26,6 +26,7 @@ import utility.Utility;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -79,6 +80,7 @@ public class ChemicalDetailScreen implements Initializable {
     private Button addStockBtn;
     private int chemID = -1;
     private ObservableList<ChemStock> chemStock = FXCollections.observableArrayList();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
     private final TextInputInfo chemNameInputInfo = new TextInputInfo(
             true,
             50,
@@ -170,6 +172,15 @@ public class ChemicalDetailScreen implements Initializable {
         refreshStockTable();
         stockAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         stockAddDateCol.setCellValueFactory(new PropertyValueFactory<>("addDate"));
+
+        // Format date in stockAddDateCol
+        stockAddDateCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.format(formatter));
+            }
+        });
 
         // Create Edit link for each stock entry
         stockEditCol.setCellFactory(column -> new TableCell<>() {

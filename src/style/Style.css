@@ -59,6 +59,11 @@ DatePicker {
     -fx-font-size: 20px;
 }
 
+.mainTextFlow Text {
+    -fx-font-family: "Courier", "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
 .maroonText {
     -fx-text-fill: -maroon;
 }

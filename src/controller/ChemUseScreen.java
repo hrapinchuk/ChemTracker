@@ -1,7 +1,6 @@
 package controller;
 
 import dao.DBChemUse;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +20,7 @@ import utility.Utility;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -52,7 +52,7 @@ public class ChemUseScreen implements Initializable {
     private Label displayMsg;
     @FXML
     private TextField searchText;
-    private ObservableList<ChemUse> allChemUses = FXCollections.observableArrayList();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm a");
 
     // Methods
     /**
@@ -72,6 +72,28 @@ public class ChemUseScreen implements Initializable {
         useMethodCol.setCellValueFactory(new PropertyValueFactory<>("method"));
         useDilutionCol.setCellValueFactory(new PropertyValueFactory<>("dilution"));
         useAreaCol.setCellValueFactory(new PropertyValueFactory<>("area"));
+
+        // Format LDT in useDateTimeCol
+        useDateTimeCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.format(formatter));
+            }
+        });
+
+        // Format 0.0 dilution as null in useDilutionCol
+        useDilutionCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    setText(item == 0.0 ? null : item.toString());
+                } else {
+                    setText(null);
+                }
+            }
+        });
 
         // Create Edit link for each use
         useEditCol.setCellFactory(column -> new TableCell<>() {
@@ -201,24 +223,27 @@ public class ChemUseScreen implements Initializable {
      */
     public void showChemUseDetailScreen(ActionEvent actionEvent) throws IOException {
         Utility.showModal(actionEvent, "ChemUseDetailScreen.fxml", "Use Details");
+
+        // Create event handler to refresh use table when modal is closed
+        Stage primaryStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        primaryStage.setOnShown(windowEvent -> refreshUseTable());
     }
 
     /**
      * This method refreshes the list of entries in the useTable.
      */
     public void refreshUseTable() {
-        allChemUses = DBChemUse.getAllChemUses();
+        ObservableList<ChemUse> allChemUses = DBChemUse.getAllChemUses();
         useTable.setItems(allChemUses);
     }
 
     /**
-     * This event handler allows a user to search for chemical uses in the useTable.
+     * This method allows a user to search for chemical uses in the useTable.
      * When a user hits the Enter/Return button in the search field, this method gets and displays a
      * list of chemical uses that match the provided search criteria in the useTable. This method
      * then displays a message to the user based on the search results.
-     * @param actionEvent The button press
      */
-    public void searchChemUses(ActionEvent actionEvent) {
+    public void searchChemUses() {
         // Variable declarations
         String searchString = searchText.getText();
         ObservableList<ChemUse> matchingChemUses = DBChemUse.getChemUsesBySearch(searchString);

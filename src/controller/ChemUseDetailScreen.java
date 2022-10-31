@@ -63,10 +63,8 @@ public class ChemUseDetailScreen implements Initializable {
     private ToggleButton useTimePMBtn;
     @FXML
     private Button saveUseBtn;
-    @FXML
-    private Button cancelSaveUseBtn;
     private int chemUseID = -1;
-    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
     private final TextInputInfo useDateInputInfo = new TextInputInfo(
             true,
             10,
@@ -104,6 +102,7 @@ public class ChemUseDetailScreen implements Initializable {
             null
     );
 
+    // Methods
     /**
      * This method is called when the ChemUseDetailScreen is initialized.
      * This method populates ComboBoxes and adds change listeners to form inputs, which perform data
@@ -132,7 +131,7 @@ public class ChemUseDetailScreen implements Initializable {
         Utility.validateTextInputOnChange(useAmountText, useAmountInputInfo, useAmountError);
         Utility.validateTextInputOnChange(useDilutionText, useDilutionInputInfo, useDilutionError);
         Utility.validateTextInputOnChange(useAreaText, useAreaInputInfo, useAreaError);
-        Utility.validateTextInputOnChange(useAreaDescText, useAreaInputInfo, useAreaDescError);
+        Utility.validateTextInputOnChange(useAreaDescText, useAreaDescInputInfo, useAreaDescError);
     }
 
     /**
@@ -146,7 +145,7 @@ public class ChemUseDetailScreen implements Initializable {
         useDatePicker.setValue(chemUse.getUseDateTime().toLocalDate());
         useTimeText.setText(chemUse.getUseDateTime().toLocalTime().format(timeFormatter));
         useAmountText.setText(Double.toString(chemUse.getAmount()));
-        useDilutionText.setText(Double.toString(chemUse.getDilution()));
+        useDilutionText.setText(chemUse.getDilution() == 0.0 ? "" : Double.toString(chemUse.getDilution()));
         useAreaText.setText(Double.toString(chemUse.getArea()));
         useAreaDescText.setText(chemUse.getAreaDesc());
 
@@ -188,6 +187,7 @@ public class ChemUseDetailScreen implements Initializable {
         try {
             // Variable declaration
             boolean toggleSelected = false;
+            double dilution = 0.0;
 
             // Perform data validations
             boolean validDate = Utility.validateTextInput(
@@ -264,6 +264,11 @@ public class ChemUseDetailScreen implements Initializable {
                         useDatePicker.getValue()
                 );
 
+                // If input not empty, parse double for dilution
+                if (!useDilutionText.getText().isEmpty()) {
+                    dilution = Double.parseDouble(useDilutionText.getText());
+                }
+
                 // Create a ChemUse object
                 ChemUse chemUse = new ChemUse(
                         chemUseID,
@@ -275,7 +280,7 @@ public class ChemUseDetailScreen implements Initializable {
                         null,
                         useMethodCombo.getSelectionModel().getSelectedItem().getId(),
                         useMethodCombo.getSelectionModel().getSelectedItem().getName(),
-                        Double.parseDouble(useDilutionText.getText()),
+                        dilution,
                         Double.parseDouble(useAreaText.getText()),
                         useAreaDescText.getText()
                 );
@@ -315,5 +320,16 @@ public class ChemUseDetailScreen implements Initializable {
         if (confirmCancel) {
             Utility.closeModal(actionEvent);
         }
+    }
+
+    /**
+     * This method adds a unit to the Amount label when a new Chemical is selected in the ComboBox.
+     */
+    public void updateAmountUnit() {
+        // Get selected Chemical from ComboBox
+        Chemical selectedChem = useChemCombo.getSelectionModel().getSelectedItem();
+
+        // Update Amount label
+        useAmountLabel.setText("Amount (" + selectedChem.getUnit() + ")*");
     }
 }

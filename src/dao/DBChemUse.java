@@ -269,6 +269,67 @@ public abstract class DBChemUse {
     }
 
     /**
+     * This method gets a list of chemical uses that occurred within the past three months.
+     * @return An ObservableList of recent chemical uses
+     */
+    public static ObservableList<ChemUse> getRecentChemUses() {
+        // Variable declaration
+        ObservableList<ChemUse> chemUses = FXCollections.observableArrayList();
+
+        try {
+            // Create and execute a query to select all recent chemical uses
+            String sql = "SELECT cu.*, c.name AS chemical, c.unit_id, u.name AS unit, m.name as method " +
+                    "FROM chem_use cu " +
+                    "LEFT JOIN chemical c ON cu.chem_id = c.id " +
+                    "LEFT JOIN unit u ON c.unit_id = u.id " +
+                    "LEFT JOIN method m ON cu.method_id = m.id " +
+                    "WHERE use_datetime >= NOW() - INTERVAL 3 MONTH";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through results
+            while (rs.next()) {
+                // Create a ChemUse object from the current row
+                int id = rs.getInt("id");
+                LocalDateTime useDateTime = rs.getTimestamp("use_datetime").toLocalDateTime();
+                int chemID = rs.getInt("chem_id");
+                String chemical = rs.getString("chemical");
+                double amount = rs.getDouble("amount");
+                int unitID = rs.getInt("unit_id");
+                String unit = rs.getString("unit");
+                int methodID = rs.getInt("method_id");
+                String method = rs.getString("method");
+                double dilution = rs.getDouble("dilution");
+                double area = rs.getDouble("area");
+                String areaDesc = rs.getString("area_desc");
+                ChemUse thisUse = new ChemUse(
+                        id,
+                        useDateTime,
+                        chemID,
+                        chemical,
+                        amount,
+                        unitID,
+                        unit,
+                        methodID,
+                        method,
+                        dilution,
+                        area,
+                        areaDesc
+                );
+
+                // Add ChemUse to list of chemUses
+                chemUses.add(thisUse);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return list of recent chemUses
+        return chemUses;
+    }
+
+    /**
      * This method gets a list of all distinct years in which there were chemical uses.
      * @return An ObservableList of distinct years in which chemical uses occurred
      */

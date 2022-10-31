@@ -75,7 +75,7 @@
                   <ToggleButton fx:id="useTimePMBtn" layoutX="210.0" layoutY="15.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" text="PM" toggleGroup="$timeToggle" />
                </children>
             </HBox>
-            <ComboBox fx:id="useChemCombo" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="useChemCombo" maxWidth="1.7976931348623157E308" onAction="#updateAmountUnit" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="useAmountText" GridPane.rowIndex="4" />
             <ComboBox fx:id="useMethodCombo" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <TextField fx:id="useDilutionText" GridPane.rowIndex="7" />

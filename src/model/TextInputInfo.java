@@ -33,6 +33,7 @@ public class TextInputInfo {
         this.patternError = patternError;
     }
 
+    // Methods
     /**
      * This method indicates whether a value is required for the TextInputControl.
      * @return A boolean describing whether a value is required for the TextInputControl

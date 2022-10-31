@@ -70,8 +70,8 @@ public class ChemStockDetailScreen implements Initializable {
         Utility.validateTextInputOnChange(
                 stockAddDatePicker.getEditor(),
                 stockAddDateInputInfo,
-                stockAddDateError)
-        ;
+                stockAddDateError
+        );
     }
 
     /**
@@ -90,7 +90,8 @@ public class ChemStockDetailScreen implements Initializable {
         // Assign value to chemID
         this.chemID = chemID;
 
-        // If existing chemical stock is being updated,...
+        // If existing chemical stock is being updated, populate inputs, update chemStockID, and
+        // make UI change
         if (chemStock != null) {
             // Populate text inputs with appropriate data
             stockAmountText.setText(Double.toString(chemStock.getAmount()));
@@ -99,7 +100,7 @@ public class ChemStockDetailScreen implements Initializable {
             // Assign value to chemStockID
             chemStockID = chemStock.getId();
 
-            // Make UI changes
+            // Make UI change
             saveStockBtn.setText("Update");
         }
     }

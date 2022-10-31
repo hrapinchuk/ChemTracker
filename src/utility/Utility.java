@@ -89,9 +89,8 @@ public class Utility {
     /**
      * This method closes a modal screen.
      * @param actionEvent The event prompting this method call
-     * @throws IOException If an input/output exception occurs
      */
-    public static void closeModal(ActionEvent actionEvent) throws IOException {
+    public static void closeModal(ActionEvent actionEvent) {
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -182,15 +181,6 @@ public class Utility {
     }
 
     /**
-     * This method validates whether a String has been given a value.
-     * @param inputString The String being validated
-     * @return A boolean representing whether the String has been given a value (true) or not (false)
-     */
-    public static boolean validateTextInputNotNull(String inputString) {
-        return !inputString.isEmpty();
-    }
-
-    /**
      * This method validates whether a String's length has exceeded its maximum allotted value.
      * @param inputString The String being validated
      * @param maxLength An int representing the maximum length of the String
@@ -230,27 +220,31 @@ public class Utility {
         boolean validInput = true;
         StringBuilder errorSB = new StringBuilder();
 
-        // If input is required, validate that input is not null
-        if (inputInfo.isRequired() && !validateTextInputNotNull(inputString)) {
-            validInput = false;
-            appendToStringBuilder("Required", errorSB);
-        }
+        // If input is empty and required, mark input as invalid and append an error message
+        if (inputString.isEmpty()) {
+            if (inputInfo.isRequired()) {
+                validInput = false;
+                appendToStringBuilder("Required", errorSB);
+            }
 
-        // Validate that input does not exceed maxLength
-        if (!validateTextInputLength(inputString, inputInfo.getMaxLength())) {
-            validInput = false;
-            String lengthError = "Cannot exceed " + inputInfo.getMaxLength() + " characters";
-            appendToStringBuilder(lengthError, errorSB);
+        // If input is not empty, perform other validations
+        } else {
+            // Validate that input does not exceed maxLength
+            if (!validateTextInputLength(inputString, inputInfo.getMaxLength())) {
+                validInput = false;
+                String lengthError = "Cannot exceed " + inputInfo.getMaxLength() + " characters";
+                appendToStringBuilder(lengthError, errorSB);
 
-            // Shorten input to maximum allowable length
-            String maxString = inputString.substring(0, inputInfo.getMaxLength());
-            inputControl.setText(maxString);
-        }
+                // Shorten input to maximum allowable length
+                String maxString = inputString.substring(0, inputInfo.getMaxLength());
+                inputControl.setText(maxString);
+            }
 
-        // If pattern is provided, validate that input matches pattern
-        if (inputInfo.getPattern() != null && !validateTextInputPattern(inputString, inputInfo.getPattern())) {
-            validInput = false;
-            appendToStringBuilder(inputInfo.getPatternError(), errorSB);
+            // If pattern is provided, validate that input matches pattern
+            if (inputInfo.getPattern() != null && !validateTextInputPattern(inputString, inputInfo.getPattern())) {
+                validInput = false;
+                appendToStringBuilder(inputInfo.getPatternError(), errorSB);
+            }
         }
 
         // Display error message and return boolean indicating whether input is valid
@@ -291,9 +285,8 @@ public class Utility {
                                                  TextInputInfo inputInfo,
                                                  Label errorLabel) {
         // Implement ChangeListener to validate text input on change
-        ChangeListener<String> listener = ((observableValue, oldValue, newValue) -> {
-            validateTextInput(inputControl, inputInfo, errorLabel);
-        });
+        ChangeListener<String> listener = ((observableValue, oldValue, newValue) ->
+                validateTextInput(inputControl, inputInfo, errorLabel));
 
         // Add change listener to inputControl
         inputControl.textProperty().addListener(listener);
@@ -310,9 +303,9 @@ public class Utility {
      */
     public static LocalDateTime convertTo24Hr(String timeString, boolean isAM, LocalDate localDate) {
         // Variable declarations
-        LocalTime hrTwelve = LocalTime.of(12, 00);
-        LocalTime hrThirteen = LocalTime.of(13, 00);
-        LocalTime hrOne = LocalTime.of(01, 00);
+        LocalTime hrTwelve = LocalTime.of(12, 0);
+        LocalTime hrThirteen = LocalTime.of(13, 0);
+        LocalTime hrOne = LocalTime.of(1, 0);
 
         // If timeString needs a preceding 0, prepend it
         if (timeString.length() <= 4) {

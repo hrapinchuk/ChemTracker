@@ -3,7 +3,6 @@ package controller;
 import dao.DBChemUse;
 import dao.DBChemical;
 import dao.DBChemStock;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,7 +46,6 @@ public class ChemicalScreen implements Initializable {
     private TextField searchText;
     @FXML
     private Label displayMsg;
-    private ObservableList<Chemical> allChemicals = FXCollections.observableArrayList();
 
     // Methods
     /**
@@ -81,7 +79,7 @@ public class ChemicalScreen implements Initializable {
                 editLink.setOnAction(event -> {
                     try {
                         // Get chemical from selected row
-                        Chemical rowChemical = (Chemical)getTableView().getItems().get(getIndex());
+                        Chemical rowChemical = getTableView().getItems().get(getIndex());
 
                         // Load view of the ChemicalDetailScreen
                         FXMLLoader loader = new FXMLLoader();
@@ -118,7 +116,7 @@ public class ChemicalScreen implements Initializable {
                 // Create event handler to confirm delete when Delete is clicked
                 deleteLink.setOnAction(event -> {
                     // Get chemical from selected row
-                    Chemical rowChemical = (Chemical)getTableView().getItems().get(getIndex());
+                    Chemical rowChemical = getTableView().getItems().get(getIndex());
 
                     // Get any stock and uses associated with this chemical
                     ObservableList<ChemStock> chemStock = DBChemStock.getChemStockByChemID(rowChemical.getId());
@@ -203,9 +201,8 @@ public class ChemicalScreen implements Initializable {
      * When a user hits the Enter/Return button in the search field, this method gets and displays a
      * list of chemicals that match the provided search criteria in the chemTable. This method then
      * displays a message to the user based on the search results.
-     * @param actionEvent The button press
      */
-    public void searchChemicals(ActionEvent actionEvent) {
+    public void searchChemicals() {
         // Variable declarations
         String searchString = searchText.getText();
         ObservableList<Chemical> matchingChemicals = DBChemical.getChemicalsBySearch(searchString);
@@ -227,7 +224,7 @@ public class ChemicalScreen implements Initializable {
      * This method refreshes chemTable with a list of all chemicals from the chemical table.
      */
     public void refreshChemTable() {
-        allChemicals = DBChemical.getAllChemicals();
+        ObservableList<Chemical> allChemicals = DBChemical.getAllChemicals();
         chemTable.setItems(allChemicals);
     }
 }

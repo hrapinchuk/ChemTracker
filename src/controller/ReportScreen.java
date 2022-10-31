@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import model.ChemUse;
@@ -19,6 +16,7 @@ import utility.Utility;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -47,9 +45,7 @@ public class ReportScreen implements Initializable {
     private TableColumn<ChemUse, Double> areaCol;
     @FXML
     private Label displayMsg;
-    private ObservableList<Month> months = FXCollections.observableArrayList();
-    private ObservableList<Integer> years = FXCollections.observableArrayList();
-    private ObservableList<ChemUse> chemUses = FXCollections.observableArrayList();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm a");
 
     // Methods
     /**
@@ -62,6 +58,7 @@ public class ReportScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Get data to populate ComboBoxes
+        ObservableList<Month> months = FXCollections.observableArrayList();
         months.addAll(
                 new Month(1, "January"),
                 new Month(2, "February"),
@@ -76,7 +73,7 @@ public class ReportScreen implements Initializable {
                 new Month(11, "November"),
                 new Month(12, "December")
         );
-        years = DBChemUse.getChemUseYears();
+        ObservableList<Integer> years = DBChemUse.getChemUseYears();
 
         // Load months and years into ComboBoxes
         monthCombo.setItems(months);
@@ -94,6 +91,28 @@ public class ReportScreen implements Initializable {
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amountDesc"));
         dilutionCol.setCellValueFactory(new PropertyValueFactory<>("dilution"));
         areaCol.setCellValueFactory(new PropertyValueFactory<>("area"));
+
+        // Format LDT in dateTimeCol
+        dateTimeCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item.format(formatter));
+            }
+        });
+
+        // Format 0.0 dilution as null in dilutionCol
+        dilutionCol.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty) {
+                    setText(item == 0.0 ? null : item.toString());
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 
     /**
@@ -133,13 +152,12 @@ public class ReportScreen implements Initializable {
     }
 
     /**
-     * This event handler generates and displays a report.
+     * This method generates and displays a report.
      * When the Run Report button is clicked, this method checks whether a month and year have been
      * selected. If so, this method gets all chemical uses from the DB that occur within the
      * specified time frame, and displays their data in the reportTable.
-     * @param actionEvent The click event
      */
-    public void runReport(ActionEvent actionEvent) {
+    public void runReport() {
         // Variable declarations
         Month selectedMonth = monthCombo.getSelectionModel().getSelectedItem();
         Integer selectedYear = yearCombo.getSelectionModel().getSelectedItem();
@@ -150,7 +168,7 @@ public class ReportScreen implements Initializable {
 
         // Otherwise, run report
         } else {
-            chemUses = DBChemUse.getChemUsesByDate(selectedMonth.getNumber(), selectedYear);
+            ObservableList<ChemUse> chemUses = DBChemUse.getChemUsesByDate(selectedMonth.getNumber(), selectedYear);
             reportTable.setItems(chemUses);
 
             // Display message to the user
